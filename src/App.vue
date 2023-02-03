@@ -2,13 +2,15 @@
   <!-- Content -->
   <div class="px-3 py-10 md:px-10">
     <div class="w-full sm:w-1/2 lg:w-1/3 mx-auto">
-        <TodoSpinner />
-        
-        <TodoFormAdd />
+        <TodoSpinner v-if="loading"/>
 
-        <TodoItems />
+        <template v-else>
+          <TodoFormAdd />
 
-        <TodoEmpty />
+          <TodoItems />
+
+          <TodoEmpty />
+        </template>
     </div>
   </div>
   <!--/ Content -->
@@ -24,6 +26,12 @@ import axios from 'axios';
 export default {
     name: "App",
 
+    data() {
+      return {
+        loading: true
+      }
+    },
+
     components: { 
       TodoSpinner, 
       TodoFormAdd, 
@@ -34,7 +42,10 @@ export default {
     created() {
       axios.get('http://localhost:3000/todos')
         .then((response) => {
-          this.$store.commit('storeTodos', response.data)
+          this.$store.commit('storeTodos', response.data);
+        })
+        .finally(() => {
+          this.loading = true;
         })
     }
     
