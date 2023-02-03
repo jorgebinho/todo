@@ -9,6 +9,9 @@ export default createStore({
     storeTodos(state, payload) {
       state.todos = payload
     },
+    storeTodo(state, payload) {
+      state.todos.unshift(payload);
+    }
   },
   actions: {
     getTodos({ commit }) {
@@ -16,6 +19,12 @@ export default createStore({
                 .then((response)=> {
                   commit('storeTodos', response.data)
                 })
+    },
+    addTodo({ commit }, data) {
+      return axios.post('http://localhost:3000/todos', data)
+        .then((response) => {
+          commit('storeTodo', response.data);
+        })
     }
   },
   getters: {
