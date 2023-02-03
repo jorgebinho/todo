@@ -39,7 +39,9 @@ export default {
     },
     
     created() {
+      this.loading = true;
       this.$store.dispatch('getTodos');
+      this.loading = false;
     }
 };
 </script>
