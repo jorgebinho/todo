@@ -45,7 +45,7 @@ export default {
           this.$store.commit('storeTodos', response.data);
         })
         .finally(() => {
-          this.loading = true;
+          this.loading = false;
         })
     }
     
