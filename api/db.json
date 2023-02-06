@@ -6,9 +6,9 @@
       "id": 1
     },
     {
-      "id": 2,
-      "title": "Estudar Vue",
-      "completed": false
+      "title": "Estudar VueJS",
+      "completed": true,
+      "id": 2
     },
     {
       "id": 3,
@@ -27,7 +27,7 @@
     },
     {
       "title": "Estudar HTML",
-      "completed": false,
+      "completed": true,
       "id": 6
     }
   ]
