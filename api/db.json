@@ -16,16 +16,6 @@
       "completed": false
     },
     {
-      "title": "teste",
-      "completed": false,
-      "id": 4
-    },
-    {
-      "title": "Estudar PHP",
-      "completed": false,
-      "id": 5
-    },
-    {
       "title": "Estudar HTML",
       "completed": true,
       "id": 6
