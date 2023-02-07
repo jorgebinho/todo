@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export default createStore({
   state: {
+    URL: 'http://localhost:3000/todos',
     todos: []
   },
   mutations: {
@@ -26,26 +27,26 @@ export default createStore({
     }
   },
   actions: {
-    getTodos({ commit }) {
-      return axios.get('http://localhost:3000/todos')
+    getTodos({ commit, state }) {
+      return axios.get(`${state.URL}`)
                 .then((response)=> {
                   commit('storeTodos', response.data)
                 })
     },
-    addTodo({ commit }, data) {
-      return axios.post('http://localhost:3000/todos', data)
+    addTodo({ commit, state }, data) {
+      return axios.post(`${state.URL}`, data)
         .then((response) => {
           commit('storeTodo', response.data);
         })
     },
-    updateTodo({ commit }, { id, data }) {
-      return axios.put(`http://localhost:3000/todos/${id}`, data)
+    updateTodo({ commit, state }, { id, data }) {
+      return axios.put(`${state.URL}/${id}`, data)
               .then((response) => {
                 commit('storeTodo', response.data);
               })
     },
-    deleteTodo({ commit }, id) {
-      return axios.delete(`http://localhost:3000/todos/${id}`)
+    deleteTodo({ commit, state }, id) {
+      return axios.delete(`${state.URL}/${id}`)
               .then(() => {
                 commit('deleteTodo', id);
               })
