@@ -62,6 +62,9 @@
 </template>
 
 <script>
+import { ref } from "vue";
+import { useStore } from "vuex";
+
 export default {
   props: {
     todo: {
@@ -70,41 +73,45 @@ export default {
     },
   },
 
-  data() {
-    return {
-      title: this.todo.title,
-      isCompleted: this.todo.completed,
+  setup(props) {
+    const title = ref(props.todo.title);
+    const isCompleted = ref(props.todo.completed);
+    const store = useStore();
+
+    const onDelete = () => {
+      store.dispatch("deleteTodo", props.todo.id);
     };
-  },
 
-  methods: {
-    onTitleChange() {
-      if (!this.title) {
-        return;
-      }
-
-      this.updateTodo();
-    },
-
-    updateTodo() {
+    const updateTodo = () => {
       const payload = {
-        id: this.todo.id,
+        id: props.todo.id,
         data: {
-          title: this.title,
-          completed: this.isCompleted,
+          title: title.value,
+          completed: isCompleted.value,
         },
       };
-      this.$store.dispatch("updateTodo", payload);
-    },
+      store.dispatch("updateTodo", payload);
+    };
 
-    onCheckClick() {
-      this.isCompleted = !this.isCompleted;
-      this.updateTodo();
-    },
+    const onTitleChange = () => {
+      if (!title.value) {
+        return;
+      }
+      updateTodo();
+    };
 
-    onDelete() {
-      this.$store.dispatch("deleteTodo", this.todo.id);
-    },
+    const onCheckClick = () => {
+      isCompleted.value = !isCompleted.value;
+      updateTodo();
+    };
+
+    return {
+      title,
+      isCompleted,
+      onDelete,
+      onTitleChange,
+      onCheckClick,
+    };
   },
 };
 </script>
